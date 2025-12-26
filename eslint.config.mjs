@@ -20,5 +20,11 @@ export default defineConfig([
       sourceType: "commonjs",
       globals: globals.node
     }
+  },
+  {
+    files: ["**/__tests__/**/*.js", "**/*.test.js", "**/*.spec.js"],
+    languageOptions: {
+      globals: globals.jest
+    }
   }
 ]);

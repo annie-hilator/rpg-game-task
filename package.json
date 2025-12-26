@@ -15,18 +15,18 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "build": "webpack",
     "dev": "webpack serve",
-    "serve": "http-server dist"
-
+    "serve": "http-server dist",
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
     "@eslint/js": "^9.39.2",
+    "babel-jest": "^30.2.0",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.39.2",
@@ -34,6 +34,7 @@
     "globals": "^16.5.0",
     "html-webpack-plugin": "^5.6.5",
     "http-server": "^14.1.1",
+    "jest": "^30.2.0",
     "mini-css-extract-plugin": "^2.9.4",
     "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
