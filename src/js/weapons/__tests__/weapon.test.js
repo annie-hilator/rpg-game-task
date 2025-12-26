@@ -8,35 +8,49 @@ import LongBow from '../LongBow';
 import Axe from '../Axe';
 import StormStaff from '../StormStaff';
 
-describe('Weapon base class', () => {
-    test('constructor sets fields', () => {
-        const w = new Weapon('Тест', 10, 100, 2);
-        expect(w.name).toBe('Тест');
-        expect(w.attack).toBe(10);
-        expect(w.durability).toBe(100);
-        expect(w.range).toBe(2);
+describe('Weapon', () => {
+    test('constructor sets initDurability', () => {
+        const w = new Weapon('Старый меч', 20, 10, 1);
+        expect(w.initDurability).toBe(10);
     });
 
-    test('takeDamage reduces durability but not below 0', () => {
-        const w = new Weapon('Тест', 10, 50, 1);
-        w.takeDamage(10);
-        expect(w.durability).toBe(40);
-        w.takeDamage(999);
+    test('takeDamage decreases durability but not below 0', () => {
+        const w = new Weapon('Старый меч', 20, 10, 1);
+        w.takeDamage(5);
+        expect(w.durability).toBe(5);
+        w.takeDamage(50);
         expect(w.durability).toBe(0);
     });
 
-    test('isBroken true when durability is 0', () => {
-        const w = new Weapon('Тест', 10, 1, 1);
-        expect(w.isBroken()).toBe(false);
-        w.takeDamage(1);
-        expect(w.isBroken()).toBe(true);
+    test('takeDamage does nothing for Infinity durability', () => {
+        const w = new Weapon('Рука', 1, Infinity, 1);
+        w.takeDamage(999);
+        expect(w.durability).toBe(Infinity);
     });
 
-    test('getDamage returns 0 if broken else attack', () => {
-        const w = new Weapon('Тест', 10, 1, 1);
+    test('getDamage full attack when durability >= 30%', () => {
+        const w = new Weapon('Лук', 10, 200, 3);
         expect(w.getDamage()).toBe(10);
-        w.takeDamage(1);
+
+        w.takeDamage(100);
+        expect(w.getDamage()).toBe(10);
+
+        w.takeDamage(50);
+        expect(w.getDamage()).toBe(5);
+    });
+
+    test('getDamage returns 0 when weapon is broken', () => {
+        const w = new Weapon('Лук', 10, 200, 3);
+        w.takeDamage(1000);
+        expect(w.durability).toBe(0);
         expect(w.getDamage()).toBe(0);
+    });
+
+    test('isBroken works correctly', () => {
+        const w = new Weapon('Нож', 5, 300, 1);
+        expect(w.isBroken()).toBe(false);
+        w.takeDamage(300);
+        expect(w.isBroken()).toBe(true);
     });
 });
 

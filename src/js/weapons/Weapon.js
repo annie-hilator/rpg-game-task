@@ -3,18 +3,27 @@ export default class Weapon {
         this.name = name;
         this.attack = attack;
         this.durability = durability;
+        this.initDurability = durability;
         this.range = range;
     }
 
     takeDamage(damage) {
+        if (this.durability === Infinity)
+            return;
+
         this.durability -= damage;
-        if (this.durability < 0) {
+        if (this.durability < 0)
             this.durability = 0;
-        }
     }
 
     getDamage() {
-        return this.isBroken() ? 0 : this.attack;
+        if (this.durability === 0)
+            return 0;
+
+        if (this.durability >= this.initDurability * 0.3)
+            return this.attack;
+
+        return this.attack / 2;
     }
 
     isBroken() {
